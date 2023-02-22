@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "LOC_StateAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model LOC_StateModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>@TempData["StateInsertMsg"]</h3>
+        <form method="post" asp-controller="LOC_State" asp-action="Save">
+            @Html.HiddenFor(x=>x.StateID)
+            <div class="form-group">
+                <label>Country Name</label>
+                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>State Name</label>
+                <input type="text" required class="form-control" placeholder="Enter State Name" asp-for="StateName" />
+                <span asp-validation-for="StateName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>State Code</label>
+                <input type="number" class="form-control" placeholder="Enter State Code" asp-for="StateCode" />
+                <span asp-validation-for="StateCode" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label>Country ID</label>
+                <input type="number" class="form-control" placeholder="Enter Country ID" asp-for="CountryID" />
+            </div>*@
+            <hr />
+            <input type="submit" class="btn btn-outline-primary" />
+            <a asp-controller="LOC_State" asp-action="Back">
+                <button type="button" class="btn btn-success">Cancel</button>
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

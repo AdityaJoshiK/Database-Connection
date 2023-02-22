@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "MST_ContactCategoryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Contact Category List</h3>
+        </div>
+        <div class="col-md-2">
+            <a asp-controller="MST_ContactCategory" asp-action="Add" class="btn btn-primary btn-sm pull-right">Add Contact Category</a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-responsive table-sm">
+    <thead>
+        <tr>
+            @*<th>ContactCategoryID</th>*@
+            <th>ContactCategoryName</th>
+            <th>Created</th>
+            <th>Modified</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                @*<td>@dr["ContactCategoryID"]</td>*@
+                <td>@dr["ContactCategoryName"]</td>
+                <td>@dr["CreationDate"]</td>
+                <td>@dr["ModificationDate"]</td>
+                <td>
+                     <form method="post" >
+                        <input type="hidden" name="ContactCategoryID" value="@Convert.ToInt32(dr["ContactCategoryID"].ToString())" />
+                        <button class="btn btn-danger" type="submit" asp-controller="MST_ContactCategory" asp-action="Delete">Delete</button>
+                        <button class="btn btn-success" type="submit" asp-controller="MST_ContactCategory" asp-action="Add">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

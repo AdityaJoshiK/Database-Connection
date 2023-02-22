@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "LOC_CountryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+
+@*<div class="row">
+    <h3 style=" margin-top:auto;" class="col-md-10">Country List</h3>
+    <form class="col-md-2" asp-action="Add" asp-controller="LOC_Country">
+        <button class="btn btn-primary">Add</button>
+    </form>
+</div>*@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Country List</h3>
+            </div>
+            <div class="col-md-2">
+                <a asp-controller="LOC_Country" asp-action="Add" class="btn btn-primary pull-right">Add Country</a>
+            </div>
+            <nav class="col-md-2 navbar-light bg-light">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" id="sample_1" aria-controls="ContactTable" type="search" placeholder="Search" aria-label="Search">
+                </form>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <form method="post" class="form-inline">
+                    <input class="form-control mr-sm-2" name="CountryName" type="text" placeholder="Country Name"/>
+                    <input class="form-control mr-sm-2" name="CountryCode" type="text" placeholder="Country Code" />
+                    <button class="btn btn-success" type="submit" asp-controller="LOC_Country" asp-action="Index">Apply Filters</button>
+                </form>
+            </div>
+            <div class="col-md-2">
+               
+             
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-responsive table-sm" id="sample_1">
+    <thead>
+        <tr>
+            @*<th>Country ID</th>*@
+            <th>Country Name</th>
+            <th>Country Code</th>
+            <th>Created</th>
+            <th>Modified</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="sample_2">
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                @*<td>@dr["CountryID"]</td>*@
+                <td>@dr["CountryName"]</td>
+                <td>@dr["CountryCode"]</td>
+                <td>@dr["CreationDate"]</td>
+                <td>@dr["ModificationDate"]</td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="CountryID" value="@Convert.ToInt32(dr["CountryID"].ToString())" />
+                        <button class="btn btn-danger" type="submit" asp-controller="LOC_Country" asp-action="Delete">Delete</button>
+                        <button class="btn btn-success" type="submit" asp-controller="LOC_Country" asp-action="Add">Edit </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+
+        // Initialize the DataTable
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+        function fun1() {
+            if (confirm("Are You sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}

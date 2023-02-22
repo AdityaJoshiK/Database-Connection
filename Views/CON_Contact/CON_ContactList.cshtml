@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "CON_ContactList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Contact List</h3>
+        </div>
+        <div class="col-md-2">
+            <a asp-controller="CON_Contact" asp-action="Add" class="btn btn-primary btn-sm pull-right">Add Contact</a>
+        </div>
+        <div class="col-md-2">
+            <div id="sample_1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm input-small input-inline" placeholder="" aria-controls="sample_1"></label></div>
+        </div>
+    </div>
+</div>
+
+<table style="text-align:center" class="table table-responsive table-sm">
+    <thead>
+        <tr>
+            @*<th>ContactID</th>*@
+            <th colspan="2">Action</th>
+            <th>ContactName</th>
+            <th>CountryName</th>
+            <th>StateName</th>
+            <th>CityName</th>
+            <th>CategoryName</th>
+            <th>Address</th>
+            <th>PinCode</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>BDate</th>
+            <th>LinkedIn</th>
+            <th>Gender</th>
+            <th>Created</th>
+            <th>Modified</th>
+            <th>Profile Picture</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="ContactID" value="@Convert.ToInt32(dr["ContactID"].ToString())" />
+                        <button class="btn btn-danger btn-sm" type="submit" asp-controller="CON_Contact" asp-action="Delete">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="ContactID" value="@Convert.ToInt32(dr["ContactID"].ToString())" />
+                        <button class="btn btn-success btn-sm" type="submit" asp-controller="CON_Contact" asp-action="Add">Edit</button>
+                    </form>
+                </td>
+                @*<td>@dr["ContactID"]</td>*@
+                <td>@dr["ContactName"]</td>
+                <td>@dr["CountryName"]</td>
+                <td>@dr["StateName"]</td>
+                <td>@dr["CityName"]</td>
+                <td>@dr["ContactCategoryName"]</td>
+                <td>@dr["Address"]</td>
+                <td>@dr["PinCode"]</td>
+                <td>@dr["Mobile"]</td>
+                <td>@dr["Email"]</td>
+                <td>@dr["BirthDate"]</td>
+                <td>@dr["LinkedIn"]</td>
+                <td>@dr["Gender"]</td>
+                <td>@dr["CreationDate"]</td>
+                <td>@dr["ModificationDate"]</td>
+                <td>
+                    <img src="@dr["PhotoPath"]" style="height:150px;width:150px" class="img img-responsive" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+    {
+    <script>
+        function fun1() {
+            if (confirm("Are You Sure You Want To Delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}

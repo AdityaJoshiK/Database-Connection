@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "LOC_CityList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>City List</h3>
+        </div>
+        <div class="col-md-2">
+            <a asp-controller="LOC_City" asp-action="Add" class="btn btn-primary btn-sm pull-right">Add City</a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-responsive table-sm">
+    <thead>
+        <tr>
+            @*<th>City ID</th>*@
+            <th>Country Name</th>
+            <th>State Name</th>
+            <th>City Name</th>
+            <th>CityCode</th>
+            <th>Created</th>
+            <th>Modified</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                @*<td>@dr["CityID"]</td>*@
+                <td>@dr["CountryName"]</td>
+                <td>@dr["StateName"]</td>
+                <td>@dr["CityName"]</td>
+                <td>@dr["CityCode"]</td>
+                <td>@dr["CreationDate"]</td>
+                <td>@dr["ModificationDate"]</td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="CityID" value="@Convert.ToInt32(dr["CityID"].ToString())" />
+                        <button class="btn btn-danger" type="submit" asp-controller="LOC_City" asp-action="Delete">Delete</button>
+                        <button class="btn btn-success" type="submit" asp-controller="LOC_City" asp-action="Add">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
